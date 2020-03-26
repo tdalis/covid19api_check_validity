@@ -62,3 +62,36 @@ sum(dfc['Cases'])
 
 """ When running the sum function above the result is 5,754,978 - a different umber from the previous pull but still
 in the millions """
+
+""" After further analysis and a conversation with the developer of the api (find Kyle on Twitter: https://twitter.com/ksredelinghuys)
+I realised that the problem is not in the data, but in the way I intrepreted the data, a common problem for other
+users of the API according to Kyle. The confirmed/recovered/deaths cases are the accumulated cases not the daily cases,
+therefore, we need to take the latest date for each country """
+
+""" The code below will solve this problem on a basic level, but it won't provide you with the daily count, if you need
+the daily count, let me know and I'll try to write a script for that too """
+
+# drop first row because it had a weird date and empty fields (double check your df before executing this)
+df = df.drop(0, axis=0)
+
+# transformed Date column to datetime
+df['Date'] = pd.to_datetime(df['Date'])
+
+# create a boolean mask, call it latest_date and assign the latest date to it (latest date could be datetime.datetime, np.datetime64, pd.Timestamp, or even datetime strings)
+latest_date = (df['Date'] == '2020-03-25')
+
+# assign the sub-DataFrame to a new dataframe
+df_latest = df.loc[latest_date]
+
+# export df_latest to a csv
+df_latest.to_csv("corona_data.csv", index=False)
+
+""" You can use the code below to double check that the numbers make sense this time, using the China cases again """
+# create a boolean for China == True
+latC = df_latest['Country'] == 'China'
+# create a boolean for confirmed == True
+confC = df_latest['Status'] == 'confirmed'
+# create a sub-DataFrame where both China and confnirmed are True
+latCdf = df_latest[latC & confC]
+# See the sum of the cases
+sum(latCdf['Cases'])
