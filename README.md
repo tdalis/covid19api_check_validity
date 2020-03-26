@@ -1,10 +1,11 @@
-# covid19api_check_validity
-Checking the validity of the data coming from the covid19api so we can confirm with the community
+# covid19api_pull_and_fix_data
+Using this small script you can make sure that the data you pull from the Covid19API is sorted for the latest date
 
-## Why check validity?
-I was using this API to pull in covid-19 data to explore what types of models or information I can create for the community,
-but I've noticed a problem with the China data and I wanted to share it with the community. I hope it's my mistake because I
-know that many people are using this API and it would be a shame if the problem is with the data.
+## Why keep only latest date?
+If you don't do that, you might run into problems such as visualising and analysing the data with duplicated values.
 
 # Contact me
-If you find the problem (whether is my mistake or a data mistake), please contact me at tasos@tasospardalis.com
+If you find the problem (whether is my mistake or a data mistake), please contact me at tasos@tasospardalis.com or on Twitter @tdalis
+
+# Next step
+Naturally, I'll have to write code to break the data down to daily level for this API. I hope to get the time to do that soon, if you want to help or have the code already, let me know.
